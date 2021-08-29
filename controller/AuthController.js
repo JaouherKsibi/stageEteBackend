@@ -19,24 +19,29 @@ module.exports={
         })
     },
     login(req,res,next){
-        const email='ksibijaouher@gmail.com';
-        const password ='123456789'
-        Admin.findOne({email:email}).then(
+        //console.log(JSON.parse(req.body.data))
+        var userReact = req.body
+        /*const email='ksibijaouher@gmail.com';
+        const password ='123456789'*/
+        Admin.findOne({email:userReact.email}).then(
             user=>{
                 if(user){
-                    bcrypt.compare(password,user.password,(err,result)=>{
+                    bcrypt.compare(userReact.password,user.password,(err,result)=>{
                         if(err){
+                            
                             res.json({error:err});
                         }
                         if(result){
-                            let token=jwt.sign({email:user.email},'verySecretValue'/*,{expiresIn:'30s'}*/)
+                            let token=jwt.sign({email:user.email},'verySecretValue')//,{expiresIn:'30s'}
                             res.cookie('nToken', token, { maxAge: 900000});
                             res.json({
-                                message:'login Successfull ',
+                                message:'login Successfull',
                                 token
                             })
+                            console.log('user logged in ')
                         }
                         else{
+                            console.log('asef')
                             res.json({
                                 message:'password does not match'
                             })

@@ -20,7 +20,7 @@ module.exports={
     },
     //getting all products 
     getAllProducts(req,res,next){
-        Product.find().populate('category').exec(function(err,products){res.status(200).json(products)});
+        Product.find().populate('category').exec(function(err,products){console.log(products) ;res.json(products);res.status(200)});
     },
     getProductById(req, res, next)  {
       Product.findOne({ _id: req.params.id  }).populate('category').exec(function(err,product){res.status(200).json(product)});

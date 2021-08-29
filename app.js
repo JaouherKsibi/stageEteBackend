@@ -44,7 +44,7 @@ app.use('/api/UpdateCategory/:id', (req, res, next) => CategoryController.Update
   // ajouter un Produit 
 app.use('/api/addProduct', (req, res, next) => ProductController.addProduct(req,res,next));
 // recuperer une liste de tous les produits 
-app.use('/api/getAllProducts', (req, res, next) => ProductController.getAllProducts(req,res,next));
+app.get('/api/getAllProducts', (req, res, next) => ProductController.getAllProducts(req,res,next));
   // recuperer un seule produit  
 app.use('/api/getProductById/:id', (req, res, next) => ProductController.getProductById(req,res,next));
 app.use('/api/UpdateProduct/:id', (req, res, next) => ProductController.UpdateProduct(req,res,next)); 
@@ -85,6 +85,6 @@ app.use('/api/deleteOrder/:id',(req,res,next)=>OrderController.deleteOrder(req,r
 /***************************************************** */
 //register
 app.use('/api/register',(req,res,next)=>authController.register(req,res,next));
-app.use('/api/login',(req,res,next)=>authController.login(req,res,next));
+app.post('/api/login',(req,res,next)=>authController.login(req,res,next));
 app.use('/api/logout',(req,res,next)=>authController.logout(req,res,next))
 module.exports = app;
