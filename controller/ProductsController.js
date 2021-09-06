@@ -7,13 +7,7 @@ module.exports={
     // ajouter un produit
     addProduct(req, res, next){
       delete req.body._id;
-      const thing = new Product({
-        nom:'laptop22',
-        price:25,
-        category:'60f89e1609011f1d2cefb2ae',
-        imageUrl:'https://media.ldlc.com/r1600/ld/products/00/05/76/42/LD0005764254_1.jpg',
-        description:'test1'
-      });
+      const thing = new Product(req.body);
       thing.save()
         .then(() => res.status(201).json({ message: 'Product saved !'}))
         .catch(error => res.status(400).json({ error }));
@@ -22,11 +16,15 @@ module.exports={
     getAllProducts(req,res,next){
         Product.find().populate('category').exec(function(err,products){console.log(products) ;res.json(products);res.status(200)});
     },
+    getNbProducts(req,res,next){
+      Product.find().then(products=>res.status(200).json(products.length)).catch(error=>res.status(400).json(error));
+  },
     getProductById(req, res, next)  {
       Product.findOne({ _id: req.params.id  }).populate('category').exec(function(err,product){res.status(200).json(product)});
     },
     UpdateProduct(req, res, next){
-      Product.updateOne({ _id: req.params.id }, { nom:'prod11'/*, _id: '60e8c654dacd4021943283bd'/*req.params.id}*/} )
+      console.log(req.params)
+      Product.updateOne({ _id: req.params.id },req.body )
             .then(() => res.status(200).json({ message: 'Objet modifié !'}))
             .catch(error => res.status(400).json({ error }));
         },
